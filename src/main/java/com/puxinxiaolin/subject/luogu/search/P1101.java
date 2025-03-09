@@ -5,15 +5,14 @@ import java.util.Scanner;
 public class P1101 {
     static int N = 110;
     static int n;
-    static char[][] g = new char[N][N];
-    static char[][] res = new char[N][N];
+    static char[][] g = new char[N][N], res = new char[N][N];
     static String word = "yizhong";
-    static int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
-    static int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
+    static int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1}, dy = {-1, 0, 1, -1, 1, -1, 0, 1};
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         n = sc.nextInt();
+        sc.nextLine();
         for (int i = 0; i < n; i++) {
             String s = sc.nextLine();
             for (int j = 0; j < n; j++) {
