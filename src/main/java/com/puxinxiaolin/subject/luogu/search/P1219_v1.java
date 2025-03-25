@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * @Description: 八皇后 Checker Challenge：
+ * @Description: 八皇后 Checker Challenge（一维数组）：
  * 1. 创建一个二维数组，记录位置是否可达
  * 2. 分别创建三个数组，分别记录列、主对角线、副对角线是否可达，然后根据题目需求，创建一个存储总解法数和存储所有满足规范答案的集合
  * 3. 开始搜索，当行数等于n时，说明已经到达最后一行，直接遍历二维数组，找出Q的位置，并在遍历前创建一个存放规范答案的数组，每在一层找到Q后，
@@ -14,52 +14,51 @@ import java.util.Scanner;
  * @Author: YccLin
  * @Date: 2024/11/30
  */
-public class P1219 {
-    static int n;
-    static int N = 15;
-    static int[] g = new int[N];
-    static boolean[] col = new boolean[N];
-    static boolean[] dg = new boolean[N];
-    static boolean[] udg = new boolean[N];
+public class P1219_v1 {
+    static int n, N = 15;
+    static int[] g = new int[N];   // 第i行皇后所在的索引
+    static boolean[] col = new boolean[N],
+            dg = new boolean[2 * N],
+            udg = new boolean[2 * N];
     static List<int[]> ans = new ArrayList<>();
-    static int cnt = 0;
+    static int count = 0;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         n = sc.nextInt();
         sc.close();
+
         dfs(0);
 
-        for (int i = 0; i < Math.min(cnt, 3); i++) {
+        for (int i = 0; i < Math.min(count, 3); i++) {
             for (int j = 0; j < ans.get(i).length; j++) {
                 System.out.print(ans.get(i)[j] + " ");
             }
             System.out.println();
         }
-        System.out.println(cnt);
+        System.out.println(count);
     }
 
     private static void dfs(int u) {
+        // 到达最后一行
         if (u == n) {
             int[] t = new int[n];
             for (int i = 0; i < n; i++) {
+                // 题目索引从1开始
                 t[i] = g[i] + 1;
             }
             ans.add(t);
-            cnt++;
+            count++;
             return;
         }
 
         for (int i = 0; i < n; i++) {
-            if (!col[i] && !dg[u + i] && !udg[n + u - i]) {
+            if (!col[i] && !dg[u + i] && !udg[n - u + i]) {
                 g[u] = i;
-                col[i] = dg[u + i] = udg[n + u - i] = true;
-
+                col[i] = dg[u + i] = udg[n - u + i] = true;
                 dfs(u + 1);
-
-                col[i] = dg[u + i] = udg[n + u - i] = false;
+                col[i] = dg[u + i] = udg[n - u + i] = false;
             }
         }
     }
-
 }
