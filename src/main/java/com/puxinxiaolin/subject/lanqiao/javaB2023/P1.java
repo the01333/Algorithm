@@ -1,30 +1,38 @@
 package com.puxinxiaolin.subject.lanqiao.javaB2023;
 
-/**
- * @description: 令 S = 1! + 2! + 3! + ... + 202320232023! ，求 S 的末尾 9 位数字
- * @author: YCcLin
- * @date: 2025/1/4
- **/
 public class P1 {
-    static final long MOD = 1_000_000_000;
-    static final long MAX_N = 202320232023L;
+    static final int MOD = 1_000_000_007;
 
     public static void main(String[] args) {
-        Long ans = 0L;
-        for (long i = 1; i <= MAX_N; i++) {
-            ans = (ans + factorial(i)) % MOD;
-            if (factorial(i) % MOD == 0) {    // 阶层后面 0 会很多，只要超过九位可以提前终止
-                break;
+        int n = 2023;
+        int ans = 0;
+
+        for (int i = 1; i <= n; i++) {
+            if (fn(i, n) == 1) {
+                ans++;
             }
         }
-        System.out.println(ans);
+
+        long result = (long) ans * n % MOD;
+        System.out.println(result);
     }
 
-    private static Long factorial(long n) {
-        long ans = 1L;
-        for (int i = 1; i <= n; i++) {
-            ans = (ans * i) % MOD;
+    private static int fn(int a, int b) {
+//        while (b != 0) {
+//            int t = b;
+//            b = a % b;
+//            a = t;
+//        }
+//        return a;
+
+        int min = Math.min(a, b);
+        int max = 1;
+
+        for (int i = 1; i <= min; i++) {
+            if (a % i == 0 && b % i == 0) {
+                max = i;
+            }
         }
-        return ans;
+        return max;
     }
 }
